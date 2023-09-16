@@ -1,6 +1,6 @@
 module libdb.so/discord-ical-srv
 
-go 1.20
+go 1.19
 
 require (
 	github.com/diamondburned/arikawa/v3 v3.3.3
