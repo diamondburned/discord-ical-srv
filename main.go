@@ -98,6 +98,13 @@ func main() {
 func newCalendarServer(client *calendarClient) http.Handler {
 	r := chi.NewRouter()
 	r.Use(middleware.Compress(5))
+	r.Use(func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+			next.ServeHTTP(w, r)
+		})
+	})
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
